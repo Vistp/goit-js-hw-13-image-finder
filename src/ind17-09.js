@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
 // import { error, Stack } from '@pnotify/core';
 // import '@pnotify/core/dist/BrightTheme.css';
-import './sass/main.scss';
+// import './sass/main.scss';
 // import countryCardTpl from './templates/country-card.hbs';
 // import countriesListTpl from './templates/countries-list.hbs';
 // import API from './js/fetchCountries';
@@ -35,6 +35,8 @@ const imgApiService = new ImgApiService();
 searchFormEl.addEventListener('input', debounce(onSearch, 500));
 loadMoreBtn.addEventListener('click', onLoadMore);
 
+
+// let searchQuery = '';
 function onSearch(e) {
     // console.log(e.target.value);
     //    const form = e.target;
@@ -45,32 +47,34 @@ function onSearch(e) {
     if (imgApiService.query === '' || imgApiService.query === ' ') {
     // return console.log('Введи что-нибудь');
         return;
-    }
-    console.log('Нужно убрать невидимость с кнопки');
-    //  loadMoreBtn.classList.remove('visually-hidden');
+  }
+//     const url = `https://pixabay.com/api/?key=23370908-ce48d92bb09d31672ee5e9cf0&q=${searchQuery}&image_type=photo&per_page=12&page=3`;
+// fetch(url)
+//     .then(r => r.json())
+//     .then(appendGalleryMarkup);
     imgApiService.resetPage();
     // imgApiService.fetchImgCards().then(hits => console.log(hits));
     imgApiService.fetchImgCards().then(hits => {
         // очищает перед появлением результата нового запроса
         clearContainer();
         appendGalleryMarkup(hits);
-        loadMoreBtn.classList.remove('visually-hidden');
     });
 }
 
+
+
+
 function onLoadMore() {
-    imgApiService.fetchImgCards().then(hits => {
-        appendGalleryMarkup(hits);
-        scroll();
-    })
+//      const url = `https://pixabay.com/api/?key=23370908-ce48d92bb09d31672ee5e9cf0&q=${searchQuery}&image_type=photo&per_page=12&page=3`;
+// fetch(url)
+//     .then(r => r.json())
+//     .then(appendGalleryMarkup);
+
+imgApiService.fetchImgCards().then(appendGalleryMarkup);
+    
 }
 
-function scroll() {
-     galleryEl.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-        });
-}
+
 // ---------разметка карточек изображений
 function appendGalleryMarkup(hits) {
     galleryEl.insertAdjacentHTML('beforeend', imgCardTpl(hits));
